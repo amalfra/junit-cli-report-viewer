@@ -1,0 +1,31 @@
+{
+  "name": "junit-cli-report-viewer",
+  "version": "0.0.1",
+  "description": "A tool to generate CLI reports from junit XML output",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test",
+    "junit-cli-report-viewer": "./index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:amalfra/junit-cli-report-viewer.git"
+  },
+  "author": "Amal Francis",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/amalfra/junit-cli-report-viewer/issues"
+  },
+  "homepage": "https://github.com/amalfra/junit-cli-report-viewer",
+  "keywords": [
+    "junit",
+    "xml",
+    "report",
+    "cli",
+    "viewer"
+  ],
+  "dependencies": {
+    "commander": "^2.17.1",
+    "xml2js": "^0.4.19"
+  }
+}
