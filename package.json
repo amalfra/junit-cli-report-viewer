@@ -25,6 +25,7 @@
     "viewer"
   ],
   "dependencies": {
+    "columnify": "^1.5.4",
     "commander": "^2.17.1",
     "xml2js": "^0.4.19"
   }
