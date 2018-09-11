@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 
-var program = require('commander');
-var fs = require('fs');
-var parseString = require('xml2js').parseString;
+const program = require('commander');
+const fs = require('fs');
+const parseString = require('xml2js').parseString;
 
-var packageJson = require('./package.json');
-var lib = require('./lib');
+const packageJson = require('./package.json');
+const lib = require('./lib');
 
 program
   .version(packageJson.version, '-v, --version')
@@ -18,15 +18,18 @@ if (program.args.length < 1) {
   process.exit(1);
 }
 
-var filepath = program.args[0];
+const filepath = program.args[0];
 if (!fs.existsSync(filepath)) {
   console.warn('File does not exists in filepath provided');
   process.exit(1);
 }
-var xmlStr = fs.readFileSync(filepath, 'utf8');
+const xmlStr = fs.readFileSync(filepath, 'utf8');
 
-parseString(xmlStr, function (err, result) {
+parseString(xmlStr, (err, result) => {
   console.log();
   lib.printSummary(result.testsuites.$);
   console.log();
+  result.testsuites.testsuite.forEach(t => {
+    lib.printTestsuiteResult(t);
+  });
 });
