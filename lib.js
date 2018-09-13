@@ -44,11 +44,16 @@ const isTestcaseSuccess = (testcase) => {
 };
 
 const printTestcaseResult = (testcase) => {
+  let resultParagraph = '';
+
   if (isTestcaseSuccess(testcase)) {
-    console.log(`   ${logSymbols.success} `, testcase.$.name);
+    resultParagraph += `   ${logSymbols.success} ${testcase.$.name}`;
   } else {
-    console.log(`   ${logSymbols.error} `, testcase.$.name);
+    resultParagraph += `   ${logSymbols.error} ${testcase.$.name}`;
   }
+  resultParagraph += ` (${testcase.$.time})`;
+
+  console.log(resultParagraph);
 };
 
 exports.printTestsuiteResult = (suiteResult) => {
