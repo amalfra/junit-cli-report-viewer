@@ -1,5 +1,6 @@
 const columnify = require('columnify');
 const { red, green, bold } = require('colorette');
+const logSymbols = require('log-symbols');
 
 exports.printSummary = (summary) => {
   const data = {
@@ -14,15 +15,34 @@ exports.printSummary = (summary) => {
   console.log(columns);
 };
 
-const isSuccess = (summary) => {
-  return summary.errors === 0 && summary.failures === 0;
+const isTestsuiteSuccess = (summary) => {
+  return parseInt(summary.errors) === 0 && parseInt(summary.failures) === 0;
+};
+
+const isTestcaseSuccess = (testcase) => {
+  return testcase.failure === undefined;
+};
+
+const printTestcaseResult = (testcase) => {
+  if (isTestcaseSuccess(testcase)) {
+    console.log(`   ${logSymbols.success} `, testcase.$.name);
+  } else {
+    console.log(`   ${logSymbols.error} `, testcase.$.name);
+  }
 };
 
 exports.printTestsuiteResult = (suiteResult) => {
   const summary = suiteResult.$;
-  if (isSuccess(summary)) {
-    console.log(` ${bold(green('PASS'))} `, summary.name);
+  let summaryParagraph = '';
+  if (isTestsuiteSuccess(summary)) {
+    summaryParagraph += ` ${bold(green('PASS'))} ${summary.name}`;
   } else {
-    console.log(` ${bold(red('FAIL'))} `, summary.name);
+    summaryParagraph += ` ${bold(red('FAIL'))} ${summary.name}`;
   }
+  summaryParagraph += ` (${summary.time})`;
+
+  console.log(summaryParagraph);
+
+  const testscases = suiteResult.testcase;
+  testscases.forEach(printTestcaseResult);
 };
