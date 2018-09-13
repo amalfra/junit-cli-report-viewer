@@ -15,6 +15,26 @@ exports.printSummary = (summary) => {
   console.log(columns);
 };
 
+exports.findSummaryFromTestsuites = (testsuites) => {
+  const result = {
+    errors: 0,
+    skipped: 0,
+    tests: 0,
+    failures: 0,
+    time: 0,
+  };
+  
+  testsuites.forEach(t => {
+    Object.keys(result).forEach(k => {
+      if (t.$[k]) {
+        result[k] += parseFloat(t.$[k]);
+      }
+    });
+  });
+
+  return result;
+};
+
 const isTestsuiteSuccess = (summary) => {
   return parseInt(summary.errors) === 0 && parseInt(summary.failures) === 0;
 };
@@ -44,5 +64,7 @@ exports.printTestsuiteResult = (suiteResult) => {
   console.log(summaryParagraph);
 
   const testscases = suiteResult.testcase;
-  testscases.forEach(printTestcaseResult);
+  if (testscases) {
+    testscases.forEach(printTestcaseResult);
+  }
 };

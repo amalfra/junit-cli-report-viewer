@@ -26,7 +26,14 @@ if (!fs.existsSync(filepath)) {
 const xmlStr = fs.readFileSync(filepath, 'utf8');
 
 parseString(xmlStr, (err, result) => {
-  console.log();
+  if (err) {
+    console.error('Failed to parse XML file');
+    process.exit(1);
+  }
+  if (!result.testsuites.$) {
+    result.testsuites.$ = lib.findSummaryFromTestsuites(result.testsuites.testsuite);
+  }
+
   lib.printSummary(result.testsuites.$);
   console.log();
   result.testsuites.testsuite.forEach(t => {
