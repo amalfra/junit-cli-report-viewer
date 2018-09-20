@@ -34,9 +34,10 @@ parseString(xmlStr, (err, result) => {
     result.testsuites.$ = lib.findSummaryFromTestsuites(result.testsuites.testsuite);
   }
 
-  lib.printSummary(result.testsuites.$);
+  console.log(lib.generateSummary(result.testsuites.$));
   console.log();
   result.testsuites.testsuite.forEach(t => {
-    lib.printTestsuiteResult(t);
+    console.log(lib.generateTestsuiteSummary(t));
+    console.log(lib.generateTestsuiteResult(t));
   });
 });

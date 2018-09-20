@@ -1,8 +1,9 @@
 const columnify = require('columnify');
 const { red, green, bold } = require('colorette');
 const logSymbols = require('log-symbols');
+const { EOL } = require('os');
 
-exports.printSummary = (summary) => {
+exports.generateSummary = (summary) => {
   const data = {
     '> Name:': summary.name,
     '> Total number of tests:': summary.tests,
@@ -12,7 +13,7 @@ exports.printSummary = (summary) => {
   const columns = columnify(data, {
     showHeaders: false,
   });
-  console.log(columns);
+  return columns;
 };
 
 exports.findSummaryFromTestsuites = (testsuites) => {
@@ -43,7 +44,7 @@ const isTestcaseSuccess = (testcase) => {
   return testcase.failure === undefined;
 };
 
-const printTestcaseResult = (testcase) => {
+const generateTestcaseResult = (testcase) => {
   let resultParagraph = '';
 
   if (isTestcaseSuccess(testcase)) {
@@ -53,10 +54,10 @@ const printTestcaseResult = (testcase) => {
   }
   resultParagraph += ` (${testcase.$.time})`;
 
-  console.log(resultParagraph);
+  return resultParagraph;
 };
 
-exports.printTestsuiteResult = (suiteResult) => {
+exports.generateTestsuiteSummary = (suiteResult) => {
   const summary = suiteResult.$;
   let summaryParagraph = '';
   if (isTestsuiteSuccess(summary)) {
@@ -66,10 +67,16 @@ exports.printTestsuiteResult = (suiteResult) => {
   }
   summaryParagraph += ` (${summary.time})`;
 
-  console.log(summaryParagraph);
+  return summaryParagraph;
+};
 
+exports.generateTestsuiteResult = (suiteResult) => {
+  let result = '';
   const testscases = suiteResult.testcase;
+
   if (testscases) {
-    testscases.forEach(printTestcaseResult);
+    result = testscases.map(testcase => generateTestcaseResult(testcase));
   }
+
+  return result.join(EOL);
 };
