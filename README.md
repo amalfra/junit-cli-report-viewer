@@ -3,6 +3,16 @@ JUnit CLI report viewer
 [![GitHub release](https://img.shields.io/github/release/amalfra/junit-cli-report-viewer.svg)](https://github.com/amalfra/junit-cli-report-viewer/releases)
 [![Build Status](https://travis-ci.org/amalfra/junit-cli-report-viewer.svg?branch=master)](https://travis-ci.org/amalfra/junit-cli-report-viewer)
 
+JUnit CLI report viewer is a commandline tool to generate CLI reports from JUnit XML format file. It generates a pretty report from provided XML file as shown below.
+
+![output demo](https://raw.githubusercontent.com/amalfra/junit-cli-report-viewer/master/.images/output-demo.png)
+
+## Installation
+```sh
+npm install -g junit-cli-report-viewer
+```
+**junit-cli-report-viewer** command will now be available in your shell.
+
 ## Development
 Questions, problems or suggestions? Please post them on the [issue tracker](https://github.com/amalfra/junit-cli-report-viewer/issues).
 
