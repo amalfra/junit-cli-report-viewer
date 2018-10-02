@@ -4,7 +4,9 @@
   "description": "A tool to generate CLI reports from junit XML output",
   "main": "index.js",
   "scripts": {
-    "test": "npm test",
+    "test": "npm test"
+  },
+  "bin": {
     "junit-cli-report-viewer": "./index.js"
   },
   "repository": {
