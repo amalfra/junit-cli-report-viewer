@@ -54,6 +54,17 @@ const generateTestcaseResult = (testcase) => {
   }
   resultParagraph += ` (${testcase.$.time})`;
 
+  if (!isTestcaseSuccess(testcase)) {
+    let errorLines = '';
+    if (testcase.failure.join) {
+      errorLines = testcase.failure.join(EOL).split(EOL).join(EOL + '\t');
+    } else {
+      errorLines = testcase.failure;
+    }
+
+    resultParagraph += EOL + '\t' + errorLines;
+  }
+
   return resultParagraph;
 };
 
