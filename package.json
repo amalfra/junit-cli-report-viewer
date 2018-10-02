@@ -4,7 +4,7 @@
   "description": "A tool to generate CLI reports from junit XML output",
   "main": "index.js",
   "scripts": {
-    "test": "npm test"
+    "test": "mocha ./*.test.js"
   },
   "bin": {
     "junit-cli-report-viewer": "./index.js"
@@ -32,5 +32,8 @@
     "commander": "^2.17.1",
     "log-symbols": "^2.2.0",
     "xml2js": "^0.4.19"
+  },
+  "devDependencies": {
+    "mocha": "^5.2.0"
   }
 }
