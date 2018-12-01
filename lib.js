@@ -24,7 +24,7 @@ exports.findSummaryFromTestsuites = (testsuites) => {
     failures: 0,
     time: 0,
   };
-  
+
   testsuites.forEach(t => {
     Object.keys(result).forEach(k => {
       if (t.$[k]) {
