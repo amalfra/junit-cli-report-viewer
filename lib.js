@@ -37,7 +37,9 @@ exports.findSummaryFromTestsuites = (testsuites) => {
 };
 
 const isTestsuiteSuccess = (summary) => {
-  return parseInt(summary.errors) === 0 && parseInt(summary.failures) === 0;
+  const errors = parseInt(summary.errors);
+  const failures = parseInt(summary.failures);
+  return (isNaN(errors) || errors === 0) && (isNaN(failures) || failures === 0);
 };
 
 const isTestcaseSuccess = (testcase) => {
@@ -82,7 +84,7 @@ exports.generateTestsuiteSummary = (suiteResult) => {
 };
 
 exports.generateTestsuiteResult = (suiteResult) => {
-  let result = '';
+  let result = [];
   const testscases = suiteResult.testcase;
 
   if (testscases) {
