@@ -4,6 +4,7 @@
   "description": "A tool to generate CLI reports from junit XML output",
   "main": "index.js",
   "scripts": {
+    "pretest": "eslint --ignore-path .gitignore .",
     "test": "mocha ./*.test.js"
   },
   "bin": {
@@ -34,6 +35,8 @@
     "xml2js": "^0.4.19"
   },
   "devDependencies": {
+    "eslint": "^6.1.0",
+    "eslint-config-strongloop": "^2.1.0",
     "mocha": "^5.2.0"
   }
 }
