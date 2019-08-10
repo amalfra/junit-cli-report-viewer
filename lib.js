@@ -1,3 +1,5 @@
+'use strict';
+
 const columnify = require('columnify');
 const { red, green, bold } = require('colorette');
 const logSymbols = require('log-symbols');
@@ -37,8 +39,8 @@ exports.findSummaryFromTestsuites = (testsuites) => {
 };
 
 const isTestsuiteSuccess = (summary) => {
-  const errors = parseInt(summary.errors);
-  const failures = parseInt(summary.failures);
+  const errors = parseInt(summary.errors, 10);
+  const failures = parseInt(summary.failures, 10);
   return (isNaN(errors) || errors === 0) && (isNaN(failures) || failures === 0);
 };
 

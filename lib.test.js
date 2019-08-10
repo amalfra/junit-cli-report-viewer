@@ -1,3 +1,5 @@
+'use strict';
+
 const assert = require('assert');
 
 const lib = require('./lib');
@@ -8,7 +10,7 @@ describe('lib', () => {
       name: 'test',
       tests: 3,
       failures: 1,
-      time: 123.3
+      time: 123.3,
     };
 
     it('should generate correct summary name', () => {
@@ -53,8 +55,8 @@ describe('lib', () => {
             tests: '1',
             failures: '3',
             time: '2.5',
-            timestamp: '2013-05-24T10:23:58'
-          }
+            timestamp: '2013-05-24T10:23:58',
+          },
         },
         {
           $: {
@@ -63,9 +65,9 @@ describe('lib', () => {
             tests: '1',
             failures: '3',
             time: '2.5',
-            timestamp: '2013-05-24T10:23:58'
-          }
-        }
+            timestamp: '2013-05-24T10:23:58',
+          },
+        },
       ];
       const expectedOutput = {
         errors: 2,
