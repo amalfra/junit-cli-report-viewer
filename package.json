@@ -37,6 +37,6 @@
   "devDependencies": {
     "eslint": "^6.1.0",
     "eslint-config-strongloop": "^2.1.0",
-    "mocha": "^5.2.0"
+    "mocha": "^8.0.1"
   }
 }
