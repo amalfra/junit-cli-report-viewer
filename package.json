@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "A tool to generate CLI reports from junit XML output",
   "main": "index.js",
+  "engines": {
+    "node": ">=10.12.0"
+  },
   "scripts": {
     "pretest": "eslint --ignore-path .gitignore .",
     "test": "mocha ./*.test.js"
