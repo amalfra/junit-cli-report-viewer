@@ -1,8 +1,6 @@
-'use strict';
+import assert from 'assert';
 
-const assert = require('assert');
-
-const lib = require('./lib');
+import * as lib from './lib.js';
 
 describe('lib', () => {
   describe('generateSummary()', () => {

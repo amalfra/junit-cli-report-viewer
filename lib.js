@@ -1,11 +1,9 @@
-'use strict';
+import logSymbols from 'log-symbols';
+import columnify from 'columnify';
+import { red, green, bold } from 'colorette';
+import { EOL } from 'os';
 
-const columnify = require('columnify');
-const { red, green, bold } = require('colorette');
-const logSymbols = require('log-symbols');
-const { EOL } = require('os');
-
-exports.generateSummary = (summary) => {
+export const generateSummary = (summary) => {
   const data = {
     '> Name:': summary.name,
     '> Total number of tests:': summary.tests,
@@ -18,7 +16,7 @@ exports.generateSummary = (summary) => {
   return columns;
 };
 
-exports.findSummaryFromTestsuites = (testsuites) => {
+export const findSummaryFromTestsuites = (testsuites) => {
   const result = {
     errors: 0,
     skipped: 0,
@@ -72,7 +70,7 @@ const generateTestcaseResult = (testcase) => {
   return resultParagraph;
 };
 
-exports.generateTestsuiteSummary = (suiteResult) => {
+export const generateTestsuiteSummary = (suiteResult) => {
   const summary = suiteResult.$;
   let summaryParagraph = '';
   if (isTestsuiteSuccess(summary)) {
@@ -85,7 +83,7 @@ exports.generateTestsuiteSummary = (suiteResult) => {
   return summaryParagraph;
 };
 
-exports.generateTestsuiteResult = (suiteResult) => {
+export const generateTestsuiteResult = (suiteResult) => {
   let result = [];
   const testscases = suiteResult.testcase;
 

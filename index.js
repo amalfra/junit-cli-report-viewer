@@ -1,12 +1,11 @@
 #!/usr/bin/env node
-'use strict';
 
-const program = require('commander');
-const fs = require('fs');
-const parseString = require('xml2js').parseString;
+import fs from 'fs';
+import program from 'commander';
+import parseString from 'xml2js';
 
-const packageJson = require('./package.json');
-const lib = require('./lib');
+import packageJson from './package.json';
+import lib from './lib';
 
 program
   .version(packageJson.version, '-v, --version')
@@ -26,7 +25,7 @@ if (!fs.existsSync(filepath)) {
 }
 const xmlStr = fs.readFileSync(filepath, 'utf8');
 
-parseString(xmlStr, (err, result) => {
+parseString.parseString(xmlStr, (err, result) => {
   if (err) {
     console.error('Failed to parse XML file');
     process.exit(1);
