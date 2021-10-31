@@ -4,8 +4,9 @@ import fs from 'fs';
 import program from 'commander';
 import parseString from 'xml2js';
 
-import packageJson from './package.json';
-import lib from './lib';
+import * as lib from './lib.js';
+
+const packageJson = JSON.parse(fs.readFileSync('package.json', 'utf-8'));
 
 program
   .version(packageJson.version, '-v, --version')
