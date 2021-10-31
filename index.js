@@ -33,6 +33,11 @@ parseString.parseString(xmlStr, (err, result) => {
   }
   if (!result.testsuites.$) {
     result.testsuites.$ = lib.findSummaryFromTestsuites(result.testsuites.testsuite);
+  } else {
+    result.testsuites.$ = {
+      ...result.testsuites.$,
+      ...lib.findSummaryFromTestsuites(result.testsuites.testsuite),
+    };
   }
 
   console.log(lib.generateSummary(result.testsuites.$));
