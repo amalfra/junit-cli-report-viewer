@@ -4,7 +4,8 @@
   "description": "A tool to generate CLI reports from junit XML output",
   "main": "index.js",
   "engines": {
-    "node": ">=10.12.0"
+    "npm": ">=7.19.1",
+    "node": ">=12.22.4"
   },
   "scripts": {
     "pretest": "eslint --ignore-path .gitignore .",
@@ -31,15 +32,15 @@
     "viewer"
   ],
   "dependencies": {
-    "colorette": "^1.0.1",
+    "colorette": "^2.0.16",
     "columnify": "^1.5.4",
-    "commander": "^2.17.1",
-    "log-symbols": "^2.2.0",
-    "xml2js": "^0.4.19"
+    "commander": "^8.3.0",
+    "log-symbols": "^5.0.0",
+    "xml2js": "^0.4.23"
   },
   "devDependencies": {
-    "eslint": "^6.1.0",
+    "eslint": "^8.1.0",
     "eslint-config-strongloop": "^2.1.0",
-    "mocha": "^8.1.1"
+    "mocha": "^9.1.3"
   }
 }
