@@ -1,12 +1,16 @@
 #!/usr/bin/env node
 
 import fs from 'fs';
+import path, { dirname } from 'path';
+import { fileURLToPath } from 'url';
 import program from 'commander';
 import parseString from 'xml2js';
 
 import * as lib from './lib.js';
 
-const packageJson = JSON.parse(fs.readFileSync('package.json', 'utf-8'));
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const packageJson = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'package.json'), 'utf-8'));
 
 program
   .version(packageJson.version, '-v, --version')
