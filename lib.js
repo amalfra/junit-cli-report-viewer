@@ -3,6 +3,8 @@ import columnify from 'columnify';
 import { red, green, bold } from 'colorette';
 import { EOL } from 'os';
 
+const toString = (v) => Object.prototype.toString.call(v);
+
 export const generateSummary = (summary) => {
   const data = {
     '> Name:': summary.name,
@@ -59,7 +61,7 @@ const generateTestcaseResult = (testcase) => {
   if (!isTestcaseSuccess(testcase)) {
     let errorLines = '';
     if (testcase.failure.join) {
-      errorLines = testcase.failure.join(EOL).split(EOL).join(EOL + '\t');
+      errorLines = testcase.failure.map(toString).join(EOL).split(EOL).join(EOL + '\t');
     } else {
       errorLines = testcase.failure;
     }

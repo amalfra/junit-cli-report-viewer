@@ -1,8 +1,52 @@
 import assert from 'assert';
 
 import * as lib from './lib.js';
+import parseString from 'xml2js';
+
+const xmlStr = `
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites>
+ <testsuite name="someName" time="0.004" errors="0" tests="2" skipped="0" failures="1">
+  <testcase classname="className" name="someName" time="0.002">
+   <failure type="toBe" message="Expected 1 to be 2.">
+   </failure>
+  </testcase>
+  <testcase classname="clasName2" name="someName2" time="0">
+  </testcase>
+ </testsuite>
+</testsuites>
+`;
 
 describe('lib', () => {
+
+  describe('from parsed XML', () => {
+    let result, err;
+    beforeEach((done) => {
+      parseString.parseString(xmlStr, (outErr, outResult) => {
+        result = outResult;
+        err = outErr;
+        done();
+      });
+    });
+    it('should parse', () => {
+      assert.equal(err, null);
+    });
+    it('should not throw with parsed XML', () => {
+      if (!result.testsuites.$) {
+        result.testsuites.$ = lib.findSummaryFromTestsuites(result.testsuites.testsuite);
+      } else {
+        result.testsuites.$ = {
+          ...result.testsuites.$,
+          ...lib.findSummaryFromTestsuites(result.testsuites.testsuite),
+        };
+      }
+      assert.doesNotThrow(() => lib.generateSummary(result.testsuites.$));
+      result.testsuites.testsuite.forEach(t => {
+        assert.doesNotThrow(() => lib.generateTestsuiteSummary(t));
+        assert.doesNotThrow(() => lib.generateTestsuiteResult(t));
+      });
+    });
+  });
   describe('generateSummary()', () => {
     const summary = {
       name: 'test',
