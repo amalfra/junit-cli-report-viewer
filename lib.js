@@ -59,9 +59,9 @@ const generateTestcaseResult = (testcase) => {
   if (!isTestcaseSuccess(testcase)) {
     let errorLines = '';
     if (testcase.failure.join) {
-      errorLines = testcase.failure.join(EOL).split(EOL).join(EOL + '\t');
+      errorLines = testcase.failure.map(f => f._).join(EOL).split(EOL).join(EOL + '\t');
     } else {
-      errorLines = testcase.failure;
+      errorLines = testcase.failure.map(f => f._);
     }
 
     resultParagraph += EOL + '\t' + errorLines;
@@ -92,4 +92,23 @@ export const generateTestsuiteResult = (suiteResult) => {
   }
 
   return result.join(EOL);
+};
+
+export const generateTestsuiteLogs = (suiteResult) => {
+  let result = [];
+  const testscases = suiteResult.testcase;
+
+  if (testscases) {
+    let errLogs = [...testscases.map(testcase => testcase["system-err"] ? testcase["system-err"].join(EOL).split(EOL).join(EOL + '\t') : "")].filter(a => a != "");
+    if (errLogs.length) {
+      result.push(EOL, "   > Error Log output:", EOL, EOL, '\t', ...errLogs)
+    }
+
+    let outLogs = [...testscases.map(testcase => testcase["system-out"] ? testcase["system-out"].join(EOL).split(EOL).join(EOL + '\t') : "" )].filter(a => a != "")
+    if (outLogs.length) {
+      result.push(EOL, "   > Standard Log output:", EOL, EOL, '\t', ...outLogs)
+    }
+  }
+
+  return result.join('');
 };
