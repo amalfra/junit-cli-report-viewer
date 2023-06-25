@@ -24,6 +24,7 @@ if (program.args.length < 1) {
   process.exit(1);
 }
 
+const options = program.opts();
 const filepath = program.args[0];
 if (!fs.existsSync(filepath)) {
   console.warn('File does not exists in filepath provided');
@@ -50,7 +51,7 @@ parseString.parseString(xmlStr, (err, result) => {
   result.testsuites.testsuite.forEach(t => {
     console.log(lib.generateTestsuiteSummary(t));
     console.log(lib.generateTestsuiteResult(t));
-    if (program.opts().logs) {
+    if (options.logs) {
       console.log(lib.generateTestsuiteLogs(t));
     }
   });
