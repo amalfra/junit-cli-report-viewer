@@ -99,16 +99,23 @@ export const generateTestsuiteLogs = (suiteResult) => {
   const testscases = suiteResult.testcase;
 
   if (testscases) {
-    let errLogs = [...testscases.map(testcase => testcase['system-err'] ? testcase['system-err'].join(EOL).split(EOL).join(EOL + '\t') : '')].filter(a => a != '');
+    let errLogs = [...testscases.map(testcase => formatLogLine(testcase['system-err']))].filter(a => a !== '');
     if (errLogs.length) {
       result.push(EOL, '   > Error Log output:', EOL, EOL, '\t', ...errLogs);
     }
 
-    let outLogs = [...testscases.map(testcase => testcase['system-out'] ? testcase['system-out'].join(EOL).split(EOL).join(EOL + '\t') : '')].filter(a => a != '');
+    let outLogs = [...testscases.map(testcase => formatLogLine(testcase['system-out']))].filter(a => a !== '');
     if (outLogs.length) {
       result.push(EOL, '   > Standard Log output:', EOL, EOL, '\t', ...outLogs);
     }
   }
 
   return result.join('');
+};
+
+const formatLogLine = (logLine) => {
+  if (logLine) {
+    return logLine.join(EOL).split(EOL).join(EOL + '\t');
+  }
+  return '';
 };
