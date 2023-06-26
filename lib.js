@@ -97,27 +97,29 @@ export const generateTestsuiteResult = (suiteResult) => {
 };
 
 export const generateTestsuiteLogs = (suiteResult) => {
-  let result = [];
+  let result = [EOL];
   const testscases = suiteResult.testcase;
 
   if (testscases) {
-    let errLogs = [...testscases.map(testcase => formatLogLine(testcase['system-err']))].filter(a => a !== '');
+    const errLogs = testscases.map(testcase => formatLogLine(testcase['system-err'])).filter(a => a);
     if (errLogs.length) {
-      result.push(EOL, '   > Error Log output:', EOL, EOL, '\t', ...errLogs);
+      result.push(`   ${logSymbols.info} Error Log output:`, EOL, '\t', ...errLogs);
     }
 
-    let outLogs = [...testscases.map(testcase => formatLogLine(testcase['system-out']))].filter(a => a !== '');
+    const outLogs = testscases.map(testcase => formatLogLine(testcase['system-out'])).filter(a => a);
     if (outLogs.length) {
-      result.push(EOL, '   > Standard Log output:', EOL, EOL, '\t', ...outLogs);
+      result.push(`   ${logSymbols.info} Standard Log output:`, EOL, '\t', ...outLogs);
     }
   }
 
   return result.join('');
 };
 
-const formatLogLine = (logLine) => {
-  if (logLine) {
-    return logLine.join(EOL).split(EOL).join(EOL + '\t');
+const formatLogLine = (log) => {
+  if (!log) {
+    return ''
+  } else if (log.join) {
+    return log.join(EOL).split(EOL).join(EOL + '\t');
   }
-  return '';
+  return log;
 };
