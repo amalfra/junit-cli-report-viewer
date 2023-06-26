@@ -117,7 +117,7 @@ export const generateTestsuiteLogs = (suiteResult) => {
 
 const formatLogLine = (log) => {
   if (!log) {
-    return ''
+    return '';
   } else if (log.join) {
     return log.join(EOL).split(EOL).join(EOL + '\t');
   }
