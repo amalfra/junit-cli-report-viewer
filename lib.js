@@ -59,9 +59,11 @@ const generateTestcaseResult = (testcase) => {
   if (!isTestcaseSuccess(testcase)) {
     let errorLines = '';
     if (testcase.failure.join) {
-      errorLines = testcase.failure.map(f => f._).join(EOL).split(EOL).join(EOL + '\t');
+      errorLines = testcase.failure.map(f => f['$'] && f['$'].message ? f['$'].message : f['_'])
+        .join(EOL).split(EOL).join(EOL + '\t');
     } else {
-      errorLines = testcase.failure.map(f => f._);
+      errorLines = testcase.failure['$'] && testcase.failure['$'].message ?
+        testcase.failure['$'].message : testcase.failure['_'];
     }
 
     resultParagraph += EOL + '\t' + errorLines;
