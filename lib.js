@@ -97,7 +97,7 @@ export const generateTestsuiteResult = (suiteResult) => {
 };
 
 export const generateTestsuiteLogs = (suiteResult) => {
-  let result = [EOL];
+  const result = [];
   const testscases = suiteResult.testcase;
 
   if (testscases) {
@@ -108,6 +108,9 @@ export const generateTestsuiteLogs = (suiteResult) => {
 
     const outLogs = testscases.map(testcase => formatLogLine(testcase['system-out'])).filter(a => a);
     if (outLogs.length) {
+      if (!result[result.length - 1].endsWith('\n')) {
+        result.push('\n');
+      }
       result.push(`   ${logSymbols.info} Standard Log output:`, EOL, '\t', ...outLogs);
     }
   }
@@ -115,10 +118,8 @@ export const generateTestsuiteLogs = (suiteResult) => {
   return result.join('');
 };
 
-const formatLogLine = (log) => {
-  if (!log) {
-    return '';
-  } else if (log.join) {
+const formatLogLine = (log = '') => {
+  if (log.join) {
     return log.join(EOL).split(EOL).join(EOL + '\t');
   }
   return log;
