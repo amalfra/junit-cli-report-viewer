@@ -20,6 +20,8 @@ Pass the path to JUnit XML format file as commandline argument to **junit-cli-re
 ```sh
 junit-cli-report-viewer /Users/amal/reports/junit.xml
 ```
+### Options
+* ```--logs``` flag is to support outputting the stdout and stderr logs for each test case.
 
 ## Development
 Questions, problems or suggestions? Please post them on the [issue tracker](https://github.com/amalfra/junit-cli-report-viewer/issues).
