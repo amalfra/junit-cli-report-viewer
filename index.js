@@ -14,6 +14,7 @@ const packageJson = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'package.
 
 program
   .version(packageJson.version, '-v, --version')
+  .option('--logs', 'include log output for test cases')
   .usage('<junit.xml file path...>');
 
 program.parse(process.argv);
@@ -23,6 +24,7 @@ if (program.args.length < 1) {
   process.exit(1);
 }
 
+const options = program.opts();
 const filepath = program.args[0];
 if (!fs.existsSync(filepath)) {
   console.warn('File does not exists in filepath provided');
@@ -49,5 +51,8 @@ parseString.parseString(xmlStr, (err, result) => {
   result.testsuites.testsuite.forEach(t => {
     console.log(lib.generateTestsuiteSummary(t));
     console.log(lib.generateTestsuiteResult(t));
+    if (options.logs) {
+      console.log(lib.generateTestsuiteLogs(t));
+    }
   });
 });

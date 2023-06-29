@@ -59,9 +59,11 @@ const generateTestcaseResult = (testcase) => {
   if (!isTestcaseSuccess(testcase)) {
     let errorLines = '';
     if (testcase.failure.join) {
-      errorLines = testcase.failure.join(EOL).split(EOL).join(EOL + '\t');
+      errorLines = testcase.failure.map(f => f['$'] && f['$'].message ? f['$'].message : f['_'])
+        .join(EOL).split(EOL).join(EOL + '\t');
     } else {
-      errorLines = testcase.failure;
+      errorLines = testcase.failure['$'] && testcase.failure['$'].message ?
+        testcase.failure['$'].message : testcase.failure['_'];
     }
 
     resultParagraph += EOL + '\t' + errorLines;
@@ -92,4 +94,32 @@ export const generateTestsuiteResult = (suiteResult) => {
   }
 
   return result.join(EOL);
+};
+
+export const generateTestsuiteLogs = (suiteResult) => {
+  let result = [EOL];
+  const testscases = suiteResult.testcase;
+
+  if (testscases) {
+    const errLogs = testscases.map(testcase => formatLogLine(testcase['system-err'])).filter(a => a);
+    if (errLogs.length) {
+      result.push(`   ${logSymbols.info} Error Log output:`, EOL, '\t', ...errLogs);
+    }
+
+    const outLogs = testscases.map(testcase => formatLogLine(testcase['system-out'])).filter(a => a);
+    if (outLogs.length) {
+      result.push(`   ${logSymbols.info} Standard Log output:`, EOL, '\t', ...outLogs);
+    }
+  }
+
+  return result.join('');
+};
+
+const formatLogLine = (log) => {
+  if (!log) {
+    return '';
+  } else if (log.join) {
+    return log.join(EOL).split(EOL).join(EOL + '\t');
+  }
+  return log;
 };
