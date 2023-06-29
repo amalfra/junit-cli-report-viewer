@@ -6,7 +6,7 @@
   "type": "module",
   "engines": {
     "npm": ">=7.19.1",
-    "node": ">=12.22.4"
+    "node": ">=14.0.0"
   },
   "scripts": {
     "pretest": "eslint --ignore-path .gitignore .",
