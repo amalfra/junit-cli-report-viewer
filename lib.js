@@ -1,6 +1,6 @@
 import logSymbols from 'log-symbols';
 import columnify from 'columnify';
-import { red, green, bold } from 'colorette';
+import { red, green, blue, bold } from 'colorette';
 import { EOL } from 'os';
 
 export const generateSummary = (summary) => {
@@ -42,21 +42,37 @@ const isTestsuiteSuccess = (summary) => {
   return (isNaN(errors) || errors === 0) && (isNaN(failures) || failures === 0);
 };
 
+const isTestsuiteSkipped = (summary) => {
+  const tests = parseInt(summary.tests, 10);
+  const skipped = parseInt(summary.skipped, 10);
+  return (isNaN(skipped) || skipped === tests);
+};
+
 const isTestcaseSuccess = (testcase) => {
-  return testcase.failure === undefined;
+  return testcase.failure === undefined && testcase.skipped === undefined;
+};
+
+const isTestcaseSkipped = (testcase) => {
+  return testcase.skipped !== undefined;
+};
+
+const isTestcaseFailure = (testcase) => {
+  return testcase.failure !== undefined;
 };
 
 const generateTestcaseResult = (testcase) => {
   let resultParagraph = '';
 
-  if (isTestcaseSuccess(testcase)) {
+  if (isTestcaseSkipped(testcase)) {
+    resultParagraph += `   ${blue('s')} ${testcase.$.name}`;
+  } else if (isTestcaseSuccess(testcase)) {
     resultParagraph += `   ${logSymbols.success} ${testcase.$.name}`;
   } else {
     resultParagraph += `   ${logSymbols.error} ${testcase.$.name}`;
   }
   resultParagraph += ` (${testcase.$.time})`;
 
-  if (!isTestcaseSuccess(testcase)) {
+  if (isTestcaseFailure(testcase)) {
     let errorLines = '';
     if (testcase.failure.join) {
       errorLines = testcase.failure.map(f => f['$'] && f['$'].message ? f['$'].message : f['_'])
@@ -75,7 +91,9 @@ const generateTestcaseResult = (testcase) => {
 export const generateTestsuiteSummary = (suiteResult) => {
   const summary = suiteResult.$;
   let summaryParagraph = '';
-  if (isTestsuiteSuccess(summary)) {
+  if (isTestsuiteSkipped(summary)) {
+    summaryParagraph += ` ${bold(blue('SKIP'))} ${summary.name}`;
+  } else if (isTestsuiteSuccess(summary)) {
     summaryParagraph += ` ${bold(green('PASS'))} ${summary.name}`;
   } else {
     summaryParagraph += ` ${bold(red('FAIL'))} ${summary.name}`;
