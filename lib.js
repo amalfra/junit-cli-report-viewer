@@ -43,9 +43,9 @@ const isTestsuiteSuccess = (summary) => {
 };
 
 const isTestsuiteSkipped = (summary) => {
-  const tests = parseInt(summary.tests, 10);
   const skipped = parseInt(summary.skipped, 10);
-  return (isNaN(skipped) || skipped === tests);
+  const tests = parseInt(summary.tests, 10);
+  return !isNaN(skipped) && (skipped === tests);
 };
 
 const isTestcaseSuccess = (testcase) => {
