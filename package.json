@@ -1,6 +1,6 @@
 {
   "name": "junit-cli-report-viewer",
-  "version": "2.5.2",
+  "version": "2.6.0",
   "description": "A tool to generate CLI reports from junit XML output",
   "main": "index.js",
   "type": "module",
