@@ -37,8 +37,13 @@ parseString.parseString(xmlStr, (err, result) => {
     console.error('Failed to parse XML file');
     process.exit(1);
   }
-  if (!result.testsuites.$) {
-    result.testsuites.$ = lib.findSummaryFromTestsuites(result.testsuites.testsuite);
+  if (!result.testsuites?.$) {
+    if (result.testsuite) {
+      result.testsuites = {};
+      result.testsuites.$ = lib.findSummaryFromTestsuites([result.testsuite]);
+    } else {
+      result.testsuites.$ = lib.findSummaryFromTestsuites(result.testsuites.testsuite);
+    }
   } else {
     result.testsuites.$ = {
       ...result.testsuites.$,
@@ -48,7 +53,7 @@ parseString.parseString(xmlStr, (err, result) => {
 
   console.log(lib.generateSummary(result.testsuites.$));
   console.log();
-  result.testsuites.testsuite.forEach(t => {
+  (result.testsuites?.testsuite || [result.testsuite]).forEach(t => {
     console.log(lib.generateTestsuiteSummary(t));
     console.log(lib.generateTestsuiteResult(t));
     if (options.logs) {
