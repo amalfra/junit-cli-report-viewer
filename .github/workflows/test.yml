@@ -24,6 +24,7 @@ jobs:
   coveralls-finish:
     needs: test
     if: always()
+    runs-on: ubuntu-latest
     steps:
       - name: Finish Coveralls
         uses: coverallsapp/github-action@v2
