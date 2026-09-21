@@ -16,4 +16,16 @@ jobs:
       - run: npm ci
       - run: npm test
       - name: Coveralls
-        uses: coverallsapp/github-action@master
+        uses: coverallsapp/github-action@v2
+        with:
+          parallel: true
+          parallel-finished: false
+
+  coveralls-finish:
+    needs: test
+    if: always()
+    steps:
+      - name: Finish Coveralls
+        uses: coverallsapp/github-action@v2
+        with:
+          parallel-finished: true
